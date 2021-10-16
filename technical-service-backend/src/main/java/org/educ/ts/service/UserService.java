@@ -7,6 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService {
 
@@ -60,5 +63,12 @@ public class UserService {
     @Transactional
     public User get(String login) {
         return userRepository.getByLoginIgnoreCase(login.toLowerCase());
+    }
+
+    public List<UserDto> getAll() {
+        return userRepository
+                .findAll().stream()
+                .map(User::toDto)
+                .collect(Collectors.toList());
     }
 }

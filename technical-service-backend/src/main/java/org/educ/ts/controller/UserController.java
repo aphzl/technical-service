@@ -6,6 +6,8 @@ import org.educ.ts.security.RoleRequired;
 import org.educ.ts.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 @RestController
@@ -16,6 +18,12 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @RoleRequired(needOne = UserRole.ADMIN)
+    @GetMapping
+    public List<UserDto> getAll() {
+        return userService.getAll();
     }
 
     @RoleRequired(needOne = UserRole.ADMIN)
