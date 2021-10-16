@@ -169,8 +169,6 @@ type UserTabTableProps = {
 const UserTabTable = (props: UserTabTableProps) => {
     const { data, onEdit, onDelete } = props;
 
-    
-
     const columns = [
         {
             title: 'Логин',

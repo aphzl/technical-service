@@ -52,9 +52,9 @@ export type AuthorizationRequest = {
 export type DeviceDto = {
     id: string;
     name: string;
-    serialNumber: string;
-    description: string;
-    requests: RequestDto[];
+    serialNumber?: string;
+    description?: string;
+    requests?: RequestDto[];
 }
 
 export type RequestDto = {
@@ -67,15 +67,88 @@ export type RequestDto = {
     updatedAt?: number;
     createdBy?: string;
     updatedBy?: string;
-    device: DeviceDto;
+    device?: DeviceDto;
+    assignedTo?: string;
 }
 
 export class ApiBundle {
     public login: LoginApi = new LoginApi(this.url);
     public user: UserApi = new UserApi(this.url);
+    public device: DeviceApi = new DeviceApi(this.url);
 
     constructor(private url: string) {}
 };
+
+class DeviceApi {
+    private urn = '/api/device';
+
+    public loadAll = (): Promise<DeviceDto[]> =>
+            fetch(`${this.url}${this.urn}/all`, { credentials: 'include' })
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+
+    public findBySerial = (serial: string): Promise<DeviceDto[]> =>
+            fetch(`${this.url}${this.urn}/serial/${serial}`, { credentials: 'include' })
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+
+    public findByName = (name: string): Promise<DeviceDto[]> =>
+            fetch(`${this.url}${this.urn}/name/${name}`, { credentials: 'include' })
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+
+    public save = (device: DeviceDto): Promise<DeviceDto> => {
+        const fetchOptions: RequestInit = {
+            method: "POST",
+            body: JSON.stringify(device),
+            headers: {"Content-Type": "application/json", 'Access-Control-Allow-Origin': '*'},
+            credentials: 'include'
+        };
+
+        return fetch(`${this.url}${this.urn}`, fetchOptions)
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+    };
+
+    public delete = (id: string) => {
+        const fetchOptions: RequestInit = {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"},
+            credentials: 'include'
+        };
+
+        return fetch(`${this.url}${this.urn}/${id}`, fetchOptions)
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+    };
+
+    constructor(private url: string) {};
+}
 
 class LoginApi {
     private urn = '/api';
@@ -103,7 +176,7 @@ class LoginApi {
 class UserApi {
     private urn = '/api/user';
 
-    public loadAll = () =>
+    public loadAll = (): Promise<UserDto[]> =>
             fetch(`${this.url}${this.urn}/all`, { credentials: 'include' })
                 .then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -113,7 +186,7 @@ class UserApi {
                     }
                 });
 
-    public findByLogin = (login: string) =>
+    public findByLogin = (login: string): Promise<UserDto> =>
             fetch(`${this.url}${this.urn}/${login}`, { credentials: 'include' })
                 .then((response) => {
                     if (response.status >= 200 && response.status < 300) {

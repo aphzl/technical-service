@@ -39,21 +39,8 @@ const Pane = (paneProps: PaneProps) => {
                 <TabsPane
                     selectedTabKey={selectedTabKey}
                     api={api}
-                    // basketState={basketState}
-                    // onAddToBasket={addToBaskeHandle}
-                    // setBasketState={setBasketState}
-                    // deleteFromBasket={deleteFromBasket}
-                    // clearBasketState={() => setBasketState({})}
-                    // updateStoreTab={updateStoreTab}
-                    // setUpdateStoreTab={m => setUpdateStoreTab(() => m)}
+                    user={user}
                 />
-                {/* {visibleAddToBasketDialog &&
-                    <AddToBasketDialog
-                        resource={addingResource!}
-                        close={closeBasketDialog}
-                        onOk={onOkAddToBasket}
-                    />
-                } */}
             </div>
             <br/>
         </div>
@@ -63,21 +50,11 @@ const Pane = (paneProps: PaneProps) => {
 type TabsPaneProps = {
     selectedTabKey: string;
     api: ApiBundle;
-    // basketState: BasketState;
-    // setBasketState: (state: BasketState) => void;
-    // onAddToBasket: (resource: ResourceInfo) => void;
-    // deleteFromBasket: (resourceId: string) => void;
-    // clearBasketState: () => void;
-    // updateStoreTab: () => void;
-    // setUpdateStoreTab: (func: () => void) => void;
+    user: UserDto;
 };
 
 const TabsPane = (props: TabsPaneProps) => {
-    const { selectedTabKey, api } = props;
-
-    
-
-    
+    const { selectedTabKey, api, user } = props;
 
     const show = (key: string) => selectedTabKey === key ? 'block' : 'none';
 
@@ -91,16 +68,14 @@ const TabsPane = (props: TabsPaneProps) => {
                 />
             </div>
             <div style={{ display: show(DEVICES_TAB) }}>
-                <DeviceTab />
+                <DeviceTab
+                    api={api}
+                    user={user}
+                />
             </div>
             <div style={{ display: show(USERS_TAB) }}>
                 <UserTab
-                    // basketState={basketState}
                     api={api}
-                    // onBasketEdit={onAddToBasket}
-                    // onDelete={deleteFromBasket}
-                    // clearBasketState={clearBasketState}
-                    // updateAll={updateAll}
                 />
             </div>
         </>
