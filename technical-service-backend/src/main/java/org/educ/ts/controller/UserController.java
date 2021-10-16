@@ -20,13 +20,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RoleRequired(needOne = UserRole.ADMIN)
+    @RoleRequired(needOne = { UserRole.ADMIN, UserRole.MANAGER })
     @GetMapping("/all")
     public List<UserDto> getAll() {
         return userService.getAll();
     }
 
-    @RoleRequired(needOne = UserRole.ADMIN)
+    @RoleRequired(needOne = { UserRole.ADMIN, UserRole.MANAGER })
     @GetMapping("/{login}")
     public UserDto get(@PathVariable("login") String id) {
         return userService.getDto(id);
