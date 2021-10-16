@@ -62,9 +62,8 @@ const TabsPane = (props: TabsPaneProps) => {
         <>
             <div style={{ display: show(REQUESTS_TAB) }}>
                 <RequestTab
-                    // api={api}
-                    // onAddToBasket={onAddToBasket}
-                    // setUpdateStoreTab={setUpdateStoreTab}
+                    api={api}
+                    user={user}
                 />
             </div>
             <div style={{ display: show(DEVICES_TAB) }}>

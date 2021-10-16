@@ -52,7 +52,7 @@ export type AuthorizationRequest = {
 export type DeviceDto = {
     id: string;
     name: string;
-    serialNumber?: string;
+    serialNumber: string;
     description?: string;
     requests?: RequestDto[];
 }
@@ -60,14 +60,14 @@ export type DeviceDto = {
 export type RequestDto = {
     id: string;
     status: string;
-    contactInfo?: string;
+    contactInfo: string;
     problemDescription?: string;
     resolveDescription?: string;
     createdAt?: number;
     updatedAt?: number;
     createdBy?: string;
     updatedBy?: string;
-    device?: DeviceDto;
+    deviceSerialNumber?: string;
     assignedTo?: string;
 }
 
@@ -75,9 +75,81 @@ export class ApiBundle {
     public login: LoginApi = new LoginApi(this.url);
     public user: UserApi = new UserApi(this.url);
     public device: DeviceApi = new DeviceApi(this.url);
+    public request: RequestApi = new RequestApi(this.url);
 
     constructor(private url: string) {}
 };
+
+class RequestApi {
+    private urn = '/api/request';
+
+    public loadAll = (): Promise<RequestDto[]> =>
+            fetch(`${this.url}${this.urn}/all`, { credentials: 'include' })
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+
+    public findByStatus = (status: string): Promise<RequestDto[]> =>
+            fetch(`${this.url}${this.urn}/status/${status}`, { credentials: 'include' })
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+
+    public findByExecutor = (executor: string): Promise<RequestDto[]> =>
+            fetch(`${this.url}${this.urn}/executor/${executor}`, { credentials: 'include' })
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+
+    public save = (request: RequestDto): Promise<RequestDto> => {
+        const fetchOptions: RequestInit = {
+            method: "POST",
+            body: JSON.stringify(request),
+            headers: {"Content-Type": "application/json", 'Access-Control-Allow-Origin': '*'},
+            credentials: 'include'
+        };
+
+        return fetch(`${this.url}${this.urn}`, fetchOptions)
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+    };
+
+    public delete = (id: string) => {
+        const fetchOptions: RequestInit = {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"},
+            credentials: 'include'
+        };
+
+        return fetch(`${this.url}${this.urn}/${id}`, fetchOptions)
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+    };
+            
+    constructor(private url: string) {};
+}
 
 class DeviceApi {
     private urn = '/api/device';

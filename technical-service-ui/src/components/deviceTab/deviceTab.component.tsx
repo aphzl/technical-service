@@ -26,7 +26,7 @@ const DeviceTab = (props: DeviceTabProps) => {
     const [saveDialogVisible, setSaveDialogVisible] = useState<boolean>(false);
     const [selectedDevice, setSelectedDevice] = useState<DeviceDto>();
     const [deleteDialogVisible, setDeleteDialogVisible] = useState<boolean>(false);
-    const allowEdit = user.role !== UserRole.WORKER;
+    const allowEdit = user.role === UserRole.MANAGER || user.role === UserRole.ADMIN;
 
     const searchHandle = (val: string) => {
         switch (selectedVal) {
@@ -177,8 +177,8 @@ const DeviceTabHeader = (props: DeviceTabHeaderProps) => {
 type DeviceTabTableProps = {
     data: DeviceDto[];
     allowEdit: boolean;
-    onEdit: (user: DeviceDto) => void;
-    onDelete: (user: DeviceDto) => void;
+    onEdit: (device: DeviceDto) => void;
+    onDelete: (device: DeviceDto) => void;
 };
 
 const DeviceTabTable = (props: DeviceTabTableProps) => {

@@ -1,5 +1,5 @@
-import { Form, Input, Modal, Select } from "antd";
-import { createRef, RefObject, useState } from "react";
+import { Form, Input, Modal } from "antd";
+import { createRef, RefObject } from "react";
 import { DeviceDto } from "../../api/api"
 import uuid from 'react-uuid'
 
@@ -15,7 +15,7 @@ const SaveDeviceDialog = (props: SaveDeviceDialogProps) => {
     const nameInputRef = createRef<Input>();
     const serialNumberInputRef = createRef<Input>();
     const descriptionInputRef = createRef<Input>();
-    const requiredInputs = [nameInputRef];
+    const requiredInputs = [nameInputRef, serialNumberInputRef];
 
     const getValue = (inputRef: RefObject<Input>): string | undefined => inputRef.current?.input.value;
     const checkInput = (input: Input | null): boolean => !!!input?.props.required || !!input.input.value;
@@ -30,7 +30,7 @@ const SaveDeviceDialog = (props: SaveDeviceDialogProps) => {
         const device: DeviceDto = {
             id: selectedDevice ? selectedDevice.id : uuid(),
             name: getValue(nameInputRef)!,
-            serialNumber: getValue(serialNumberInputRef),
+            serialNumber: getValue(serialNumberInputRef)!,
             description: getValue(descriptionInputRef)
         };
 
@@ -62,6 +62,7 @@ const SaveDeviceDialog = (props: SaveDeviceDialogProps) => {
                     </Form.Item>
                     <Form.Item
                         label='Серийный номер'
+                        required
                         initialValue={selectedDevice?.serialNumber}
                         name='serialNumber'
                     >
