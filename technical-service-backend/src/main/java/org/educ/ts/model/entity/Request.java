@@ -45,6 +45,9 @@ public class Request {
     @Column(name = "updated_by")
     private String updatedBy;
 
+    @Column(name = "assigned_to")
+    private String assignedTo;
+
     @ManyToOne
     @JoinColumns(value = @JoinColumn(name = "device_id", referencedColumnName = "id"))
     private Device device;
@@ -74,6 +77,7 @@ public class Request {
                 .updatedAt(updatedAt.getTime())
                 .createdBy(createdBy)
                 .updatedBy(updatedBy)
+                .assignedTo(assignedTo)
                 .build();
     }
 }

@@ -22,5 +22,6 @@ public class RequestDto implements Serializable {
     private String createdBy;
     private String updatedBy;
     private DeviceDto device;
+    private String assignedTo;
 
 }

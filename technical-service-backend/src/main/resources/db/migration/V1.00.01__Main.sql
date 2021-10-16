@@ -24,7 +24,8 @@ CREATE TABLE request (
     created_timestamp TIMESTAMP,
     updated_timestamp TIMESTAMP,
     created_by CHARACTER VARYING,
-    updated_by CHARACTER VARYING
+    updated_by CHARACTER VARYING,
+    assigned_to CHARACTER VARYING
 );
 
 ALTER TABLE users

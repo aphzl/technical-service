@@ -66,6 +66,7 @@ public class EntityConverter {
                 .createdBy(dto.getCreatedBy())
                 .updatedBy(dto.getUpdatedBy())
                 .device(toEntity(dto.getDevice()))
+                .assignedTo(dto.getAssignedTo())
                 .build();
     }
 }
