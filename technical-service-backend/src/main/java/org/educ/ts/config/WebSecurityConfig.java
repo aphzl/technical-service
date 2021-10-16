@@ -26,7 +26,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.apply(securityConfigurerAdapter());
+        http.cors()
+                .and()
+                .headers().frameOptions().sameOrigin()
+                .and()
+                .csrf().disable()
+                .apply(securityConfigurerAdapter());
     }
 
     private JWTConfig securityConfigurerAdapter() {
