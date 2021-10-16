@@ -6,6 +6,9 @@ import org.educ.ts.repository.DeviceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class DeviceService {
 
@@ -18,10 +21,17 @@ public class DeviceService {
     }
 
     @Transactional
-    public DeviceDto get(String id) {
-        return deviceRepository.findById(id)
+    public List<DeviceDto> findBySerial(String serial) {
+        return deviceRepository.findBySerialNumberIsContaining(serial).stream()
                 .map(Device::toDto)
-                .orElse(null);
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<DeviceDto> findByName(String name) {
+        return deviceRepository.findByNameIsContaining(name).stream()
+                .map(Device::toDto)
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -34,5 +44,12 @@ public class DeviceService {
     @Transactional
     public void delete(String id) {
         deviceRepository.deleteById(id);
+    }
+
+    @Transactional
+    public List<DeviceDto> getAll() {
+        return deviceRepository.findAll().stream()
+                .map(Device::toDto)
+                .collect(Collectors.toList());
     }
 }

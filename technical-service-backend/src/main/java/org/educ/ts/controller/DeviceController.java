@@ -6,6 +6,8 @@ import org.educ.ts.security.RoleRequired;
 import org.educ.ts.service.DeviceService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 @RestController
@@ -18,9 +20,19 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    @GetMapping("/{id}")
-    public DeviceDto get(@PathVariable("id") String id) {
-        return deviceService.get(id);
+    @GetMapping("/all")
+    public List<DeviceDto> getAll() {
+        return deviceService.getAll();
+    }
+
+    @GetMapping("/serial/{serial}")
+    public List<DeviceDto> findBySerial(@PathVariable("serial") String serial) {
+        return deviceService.findBySerial(serial);
+    }
+
+    @GetMapping("/name/{name}")
+    public List<DeviceDto> findByName(@PathVariable("name") String name) {
+        return deviceService.findByName(name);
     }
 
     @RoleRequired(needOne = { UserRole.MANAGER, UserRole.ADMIN })
