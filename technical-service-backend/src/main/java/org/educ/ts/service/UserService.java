@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Optional.ofNullable;
+
 @Service
 public class UserService {
 
@@ -29,7 +31,7 @@ public class UserService {
 
     @Transactional
     public UserDto getDto(String login) {
-        return get(login).toDto();
+        return ofNullable(get(login)).map(User::toDto).orElse(null);
     }
 
     @Transactional

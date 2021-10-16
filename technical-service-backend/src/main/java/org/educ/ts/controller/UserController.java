@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @RoleRequired(needOne = UserRole.ADMIN)
-    @GetMapping
+    @GetMapping("/all")
     public List<UserDto> getAll() {
         return userService.getAll();
     }
@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @RoleRequired(needOne = UserRole.ADMIN)
-    @DeleteMapping
-    public void delete(@PathVariable("id") String id) {
-        userService.delete(id);
+    @DeleteMapping("/{login}")
+    public void delete(@PathVariable("login") String login) {
+        userService.delete(login);
     }
 }
