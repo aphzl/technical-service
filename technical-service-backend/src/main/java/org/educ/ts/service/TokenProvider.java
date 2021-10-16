@@ -20,7 +20,7 @@ public class TokenProvider {
     private static final long TOKEN_VALIDITY_TIME = DAY_MILLISECONDS;
 
     private static final String USER_ID = "userId";
-    private static final String SECRET_KEY = UUID.randomUUID().toString();
+    private static final String SECRET_KEY = "6a42ce03-0682-437a-be78-1a170c84855a";
 
     public String parseTokenToLogin(String token) {
         return getLogin(parseToken(token));

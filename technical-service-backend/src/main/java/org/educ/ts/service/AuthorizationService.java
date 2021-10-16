@@ -32,7 +32,9 @@ public class AuthorizationService {
 
         User user = userService.get(request.getLogin());
 
-        if (passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+        if (user != null && passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            SecurityContextUtils.setContext(user.toDto());
+
             return AuthorisationResponse.builder()
                     .status(LoginStatus.OK)
                     .jwt(tokenProvider.createToken(user.getLogin()))
@@ -52,7 +54,12 @@ public class AuthorizationService {
         String login = tokenProvider.parseTokenToLogin(jwt);
         User user = userService.get(login);
 
-        return user != null;
+        if (user != null) {
+            SecurityContextUtils.setContext(user.toDto());
+            return true;
+        }
+
+        return false;
     }
 
     private AuthorisationResponse getFailResponse() {
