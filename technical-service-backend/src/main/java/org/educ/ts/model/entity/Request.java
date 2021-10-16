@@ -73,11 +73,12 @@ public class Request {
                 .contactInfo(contactInfo)
                 .problemDescription(problemDescription)
                 .resolveDescription(resolveDescription)
-                .createdAt(createdAt.getTime())
-                .updatedAt(updatedAt.getTime())
+                .createdAt(createdAt == null ? null : createdAt.getTime())
+                .updatedAt(updatedAt == null ? null : updatedAt.getTime())
                 .createdBy(createdBy)
                 .updatedBy(updatedBy)
                 .assignedTo(assignedTo)
+                .deviceSerialNumber(device == null ? null : device.getSerialNumber())
                 .build();
     }
 }
