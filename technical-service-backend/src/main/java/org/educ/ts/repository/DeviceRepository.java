@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, String> {
 
+    Device findBySerialNumber(String serial);
+
     List<Device> findBySerialNumberIsContaining(String text);
 
     List<Device> findByNameIsContaining(String text);

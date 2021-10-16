@@ -10,7 +10,7 @@ CREATE TABLE users (
 CREATE TABLE device (
     id CHARACTER VARYING NOT NULL,
     name CHARACTER VARYING NOT NULL,
-    serial_number CHARACTER VARYING,
+    serial_number CHARACTER VARYING NOT NULL,
     description CHARACTER VARYING
 );
 
@@ -31,6 +31,8 @@ CREATE TABLE request (
 ALTER TABLE users
     ADD CONSTRAINT user_login_pk PRIMARY KEY (login);
 
+ALTER TABLE device
+    ADD CONSTRAINT device_sn_key UNIQUE (serial_number);
 ALTER TABLE device
     ADD CONSTRAINT device_pk PRIMARY KEY (id);
 
