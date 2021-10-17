@@ -124,7 +124,7 @@ const DeviceTab = (props: DeviceTabProps) => {
             {deleteDialogVisible &&
                 <DeleteDeviceDialog
                     onDelete={onOkDelete}
-                    close={closeSaveDialog}
+                    close={closeDeleteDialog}
                 />
             }
         </>

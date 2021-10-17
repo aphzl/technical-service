@@ -115,7 +115,7 @@ const UserTab = (props: UserTabProps) => {
             {deleteDialogVisible &&
                 <DeleteUserDialog
                     onDelete={onOkDelete}
-                    close={closeSaveDialog}
+                    close={closeDeleteDialog}
                 />
             }
         </>

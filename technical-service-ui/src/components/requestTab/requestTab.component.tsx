@@ -39,7 +39,7 @@ const RequestTab = (props: RequestTabProps) => {
     const closeDeleteDialog = () => {
         setDeleteDialogVisible(false);
         setSelectedRequest(undefined);
-    }
+    };
 
     const save = (request: RequestDto) => {
         const devices = requestTabState.filter(d => d.id !== request.id);
@@ -142,7 +142,7 @@ const RequestTab = (props: RequestTabProps) => {
             {deleteDialogVisible &&
                 <DeleteRequestDialog
                     onDelete={onOkDelete}
-                    close={closeSaveDialog}
+                    close={closeDeleteDialog}
                 />
             }
         </>
@@ -278,20 +278,18 @@ const RequestTabTable = (props: RequestTabTableProps) => {
             width: 200,
             render: (_, item) => (
                 <>
+                    <Button
+                        style={{ marginInline: 10}}
+                        shape="circle"
+                        icon={<EditOutlined />}
+                        onClick={() => onEdit(item)}
+                    />
                     {allowDeleteAndCreate &&
-                        <>
-                            <Button
-                                style={{ marginInline: 10}}
-                                shape="circle"
-                                icon={<EditOutlined />}
-                                onClick={() => onEdit(item)}
-                            />
-                            <Button
-                                shape="circle"
-                                icon={<DeleteOutlined />}
-                                onClick={() => onDelete(item)}
-                            />
-                        </>
+                        <Button
+                            shape="circle"
+                            icon={<DeleteOutlined />}
+                            onClick={() => onDelete(item)}
+                        />
                     }
                 </>
             )

@@ -59,6 +59,7 @@ const SaveUserDialog = (props: SaveUserDialogProps) => {
                         name='login'
                     >
                         <Input
+                            disabled={!!selectedUser}
                             autoComplete='off'
                             ref={loginInputRef}
                             type='text'
