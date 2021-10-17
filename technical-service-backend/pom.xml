@@ -21,13 +21,13 @@
     </parent>
 
     <build>
-        <finalName>store-backend</finalName>
+        <finalName>technical-service-backend</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.educ.store.BackendRunner</mainClass>
+                    <mainClass>org.educ.ts.BackendRunner</mainClass>
                 </configuration>
             </plugin>
         </plugins>
